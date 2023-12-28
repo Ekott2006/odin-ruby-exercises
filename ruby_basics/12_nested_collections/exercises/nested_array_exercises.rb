@@ -11,16 +11,21 @@ def blank_seating_chart(number_of_rows, seats_per_row)
 
   # NOTE: if one of the nested arrays is changed, the others should **not**
   # change with it
+  Array.new(number_of_rows){ Array.new(seats_per_row, nil)}
 end
 
 def add_seat_to_row(chart, row_index, seat_to_add)
   # take a chart (2d array)  and add seat_to_add to the end of the row that is
   # at row_index index of the chart, then return the chart
+  chart[row_index].push(seat_to_add)
+  chart
 end
 
 def add_another_row(chart, row_to_add)
   # take a chart and add row_to_add to the end of the chart,
   # then return the chart.
+  chart.push(row_to_add)
+  chart
 end
 
 def delete_seat_from_row(chart, row_index, seat_index)
@@ -28,16 +33,22 @@ def delete_seat_from_row(chart, row_index, seat_index)
   # the chart, then return the chart
 
   # Hint: explore the ruby docs to find a method for deleting from an array!
+  chart[row_index].delete_at(seat_index)
+  chart
 end
 
 def delete_row_from_chart(chart, row_index)
   # take a chart and delete the row at row_index of the chart,
   # then return the chart
+  chart.delete_at(row_index)
+  chart
 end
 
 def count_empty_seats(chart)
   # take a chart and return the number of empty (nil) seats in it
-
+  result = 0
+  chart.each {|array| array.each { |item| result += 1 if item == nil }}
+  result
   # NOTE: `chart` should **not** be mutated
 end
 
@@ -52,7 +63,13 @@ def find_favorite(array_of_hash_objects)
   #   { name: 'JavaScript', is_my_favorite?: false },
   #   { name: 'HTML', is_my_favorite?: false }
   # ]
-
+  result = nil
+  array_of_hash_objects.each do |hashes|
+    if hashes[:is_my_favorite?]
+      result = hashes
+    end
+  end
+  result
   # TIP: there will only be a maximum of one hash in the array that will
   # return true to the :is_my_favorite? key
 end
